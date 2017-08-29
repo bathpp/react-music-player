@@ -4,38 +4,37 @@ import './progress.less';
 class Progress extends React.Component {
 	constructor(props) {
 		super(props);
-		this.changeProgress = this.changeProgress.bind(this);
+		this.setPercentage = this.setPercentage.bind(this);
 	}
-	changeProgress(e) {
+    setPercentage(e) {
 		//console.log(this);
 		let progressBar = this.refs.progressBar;
-		let progress = (e.clientX - 
+		let percentage = (e.clientX -
 				progressBar.getBoundingClientRect().left) / progressBar.clientWidth;
-		this.props.onProgressChange && this.props.onProgressChange(progress);
+		this.props.setProgress && this.props.setProgress(percentage);
 	}
 	render() {
+        let barStyle = {
+            width: `${this.props.progress}%`,
+            background: this.props.barColor
+        };
 		return (
 			<div 
-					className="components-progress row"
-					ref="progressBar"
-					onClick={this.changeProgress}
+				className='components-progress'
+				ref='progressBar'
+				onClick={this.setPercentage}
 			>
-					<div 
-							className="progress" 
-							style={
-								{
-									width: `${this.props.progress}%`,
-									background: this.props.barColor
-								}
-										}
-					>
-					</div>
+				<div
+					className='progress'
+					style={barStyle}
+                ></div>
 			</div>
 		);
 	}
 }
 
 Progress.defaultProps = {
+    progress: 0,
 	barColor: 'grey'
 }
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import Progress from '../components/progress'
+import { Link } from 'react-router-dom'
 import './player.less'
 
 
@@ -10,10 +11,12 @@ class Player extends React.Component {
         this.state = {
             progress: 0,
             volume: 0,
+            isPlay: true,
             leftTime: 0
         };
         this.setProgress = this.setProgress.bind(this);
         this.setVolume =  this.setVolume.bind(this);
+        this.play = this.play.bind(this);
     }
     componentDidMount() {
         $('#player').bind($.jPlayer.event.timeupdate, (e) => {
@@ -34,14 +37,21 @@ class Player extends React.Component {
     setProgress(progress) {
         // console.log(this);
         //console.log('from progress', progress);
-        $('#player').jPlayer('play', duration * progress);
+        $('#player').jPlayer(this.state.isPlay ? 'play' : 'pause', duration * progress);
+    }
+    play() {
+        $('#player').jPlayer(this.state.isPlay ? 'pause' : 'play');
+
+        this.setState({
+            isPlay: !this.state.isPlay
+        })
     }
 
     render() {
         return (
             <div className='page-player'>
                 <h1 className='caption'>
-                    {/*<Link to='/list'>My Music Player &gt;</Link>*/}
+                    <Link to='/list'>Go to Music List &gt;</Link>
                 </h1>
                 <div className='mt20 row'>
                     <div className='controll-wrapper'>
@@ -60,7 +70,7 @@ class Player extends React.Component {
                                 }}></i>
                                 <div className='volume-wrapper'>
                                     <Progress
-                                        progress={this.state.volume}
+                                        percentage={this.state.volume}
                                         setProgress={this.setVolume}
                                         barColor='grey'
                                     />
@@ -73,7 +83,7 @@ class Player extends React.Component {
                             marginTop: '20px'
                         }}>
                             <Progress
-                                progress={this.state.progress}
+                                percentage={this.state.progress}
                                 setProgress={this.setProgress}
                                 barColor='#447799'
                             />

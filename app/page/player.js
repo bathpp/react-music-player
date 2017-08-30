@@ -2,6 +2,7 @@ import React from 'react'
 import Progress from '../components/progress'
 import { Link } from 'react-router-dom'
 import './player.less'
+import PubSub from 'pubsub-js'
 
 
 let duration = null;
@@ -12,7 +13,7 @@ class Player extends React.Component {
             progress: 0,
             volume: 0,
             isPlay: true,
-            leftTime: 0
+            leftTime: ''
         };
         this.setProgress = this.setProgress.bind(this);
         this.setVolume =  this.setVolume.bind(this);
@@ -23,7 +24,8 @@ class Player extends React.Component {
             duration = e.jPlayer.status.duration;
             this.setState({
                 progress: e.jPlayer.status.currentPercentAbsolute,
-                volume: e.jPlayer.options.volume * 100
+                volume: e.jPlayer.options.volume * 100,
+                leftTime: this.formatTime(duration * (1 - e.jPlayer.status.currentPercentAbsolute/100))
             });
         });
     }
@@ -46,7 +48,21 @@ class Player extends React.Component {
             isPlay: !this.state.isPlay
         })
     }
+    playPrev() {
+        PubSub.publish('PLAY_PREV');
+    }
 
+    playNext(){
+        PubSub.publish('PLAY_NEXT');
+    }
+    formatTime(time) {
+        time = Math.floor(time);
+        let minute = Math.floor(time / 60);
+        let second = Math.floor(time % 60);
+
+        second = second < 10 ? `0${second}` : second;
+        return `${minute}:${second}`;
+    }
     render() {
         return (
             <div className='page-player'>
@@ -90,13 +106,13 @@ class Player extends React.Component {
                         </div>
                         <div className='mt35 row'>
                             <div>
-                                <i onClick={this.prev} className='icon prev'></i>
+                                <i onClick={this.playPrev} className='icon prev'></i>
                                 <i
                                     onClick={this.play}
                                     className={`icon ml20 ${this.state.isPlay ? 'pause' : 'play'}`}
                                 >
                                 </i>
-                                <i onClick={this.next} className='icon next ml20'></i>
+                                <i onClick={this.playNext} className='icon next ml20'></i>
                             </div>
                             <div className='-col-auto'>
                                 <i

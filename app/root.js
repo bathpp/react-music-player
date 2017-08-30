@@ -16,21 +16,72 @@ class Root extends Component {
         }
     }
 
+    playMusic(musicItem) {
+        $('#player').jPlayer('setMedia', {
+            mp3: musicItem.file
+        }).jPlayer('play');
+        this.setState({
+            currentMusicItem: musicItem
+        })
+    }
+    playNext(type = "next") {
+        let index = this.findMusicIndex(this.state.currentMusicItem)
+        let newIndex = null;
+        let musicListLength = this.state.musicList.length;
+        if (type === 'next') {
+            newIndex = (index+1) % musicListLength;
+            this.playMusic(this.state.musicList[newIndex]);
+        }
+        else {
+            newIndex = (index -1 + musicListLength) % musicListLength;
+            this.playMusic(this.state.musicList[newIndex]);
+        }
+    }
+
+    findMusicIndex(musicItem) {
+        return this.state.musicList.indexOf(musicItem);
+    }
     componentDidMount() {
         $('#player').jPlayer({
-            ready: function () {
-                $(this).jPlayer('setMedia', {
-                    mp3: './static/music/01.mp3'
-                }).jPlayer('play');
-            },
             supplied: 'mp3',
             wmode: 'window'
         });
+
+        this.playMusic(this.state.currentMusicItem);
+
+        $('#player').bind($.jPlayer.event.ended, (e) => {
+            this.playNext();
+        });
+
+        PubSub.subscribe('PLAY_MUSIC', (msg, musicItem) => {
+            this.playMusic(musicItem);
+        });
+        PubSub.subscribe('DELETE_MUSIC', (msg, musicItem) => {
+            this.setState({
+                musicList: this.state.musicList.filter(item => {
+                    return item !== musicItem;
+                })
+
+            })
+        });
+        PubSub.subscribe('PLAY_PREV', (msg) => {
+            this.playNext('prev');
+        });
+        PubSub.subscribe('PLAY_NEXT', (msg) => {
+            this.playNext();
+        });
+
     }
 
     componentWillUnmount() {
         $('#player').unbind($.jPlayer.event.ended);
+        PubSub.unsubscribe('PLAY_MUSIC');
+        PubSub.unsubscribe('DELETE_MUSIC');
+        PubSub.unsubscribe('PLAY_PREV');
+        PubSub.unsubscribe('PLAY_NEXT');
     }
+
+
     render() {
         const PlayerComponent = () => (
             <Player

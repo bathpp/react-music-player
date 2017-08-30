@@ -63,6 +63,9 @@ class Player extends React.Component {
         second = second < 10 ? `0${second}` : second;
         return `${minute}:${second}`;
     }
+    changePlayMode() {
+        PubSub.publish('CHANGE_PLAY_MODE');
+    }
     render() {
         return (
             <div className='page-player'>
@@ -116,8 +119,8 @@ class Player extends React.Component {
                             </div>
                             <div className='-col-auto'>
                                 <i
-                                    onClick={this.changeCycleModel}
-                                    className={`icon repeat-${this.props.cycleModel}`}
+                                    onClick={this.changePlayMode}
+                                    className={`icon repeat-${this.props.playMode}`}
                                 ></i>
                             </div>
                         </div>

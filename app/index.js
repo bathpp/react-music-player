@@ -6,8 +6,8 @@ import Root from './root'
 
 render(
     <AppContainer>
-			<Root></Root>
-		</AppContainer>,
+		<Root></Root>
+	</AppContainer>,
 	document.getElementById('root')
 );
 

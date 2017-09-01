@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3edc8a8b313cb73d39e5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "abb4e8ac03719810578c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -48551,8 +48551,8 @@ var MUSIC_DATA = [{
     id: 2,
     title: 'Bad Stuff',
     artist: 'Secondhand Rose',
-    file: '../../static/music/01.mp3',
-    cover: '../../static/music/01.jpg'
+    file: './static/music/01.mp3',
+    cover: './static/music/01.jpg'
 }, {
     id: 3,
     title: '恋恋风尘',

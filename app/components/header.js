@@ -7,7 +7,7 @@ class Header extends Component {
         return(
             <Link to='/'>
                 <div className="components-header row">
-                    <img className="-col-auto" src="/static/images/logo.png" width="40" alt=""/>
+                    <img className="-col-auto" src="./static/images/logo.png" width="40" alt=""/>
                     <h1 className="caption">React Music Player</h1>
                 </div>
             </Link>

@@ -4,7 +4,7 @@ import Player from "./page/player"
 import MusicList from './page/musiclist'
 import { MUSIC_DATA } from './config/musicData'
 // import { Route } from 'react-router'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { HashRouter, Route, Link } from 'react-router-dom'
 
 
 class Root extends Component {
@@ -148,17 +148,13 @@ class Root extends Component {
         )
 
         return(
-            <BrowserRouter>
+            <HashRouter>
                 <div>
                     <Header/>
-                    <Player
-                        currentMusicItem = {this.state.currentMusicItem}
-                        playMode = {this.state.currentPlayMode}
-                    ></Player>
                     <Route exact={true} path='/' component={PlayerComponent}></Route>
                     <Route path='/list' component={ListComponent}></Route>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         )
     }
 

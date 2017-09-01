@@ -10,8 +10,8 @@ export const MUSIC_DATA = [
         id: 2,
         title: 'Bad Stuff',
         artist: 'Secondhand Rose',
-        file: '../static/music/01.mp3',
-        cover: '../static/music/01.jpg'
+        file: '../../static/music/01.mp3',
+        cover: '../../static/music/01.jpg'
     }, {
         id: 3,
         title: '恋恋风尘',

@@ -4,7 +4,7 @@ import Player from "./page/player"
 import MusicList from './page/musiclist'
 import { MUSIC_DATA } from './config/musicData'
 // import { Route } from 'react-router'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 
 class Root extends Component {

@@ -151,6 +151,10 @@ class Root extends Component {
             <BrowserRouter>
                 <div>
                     <Header/>
+                    <Player
+                        currentMusicItem = {this.state.currentMusicItem}
+                        playMode = {this.state.currentPlayMode}
+                    ></Player>
                     <Route exact={true} path='/' component={PlayerComponent}></Route>
                     <Route path='/list' component={ListComponent}></Route>
                 </div>

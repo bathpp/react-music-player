@@ -6,4 +6,4 @@
 3. npm install & npm start
 4. see the player on localhost:3333
 
-[### online demo :](https://bathpp.github.io/react-music-player/#/)
+[online demo: https://bathpp.github.io/react-music-player/#/](https://bathpp.github.io/react-music-player/#/)
